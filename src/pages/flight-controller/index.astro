@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FlightController from "./_components/FlightController";
+---
+
+<Layout>
+  <div class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold">PID Flight Controller</h1>
+      <p class="mt-2 text-base-content/70">
+        Cascaded PID loop: target angle → angle PID → target rate → rate PID →
+        roll/pitch/yaw commands → X-frame quad mixer → motor outputs.
+      </p>
+    </div>
+
+    <div class="bg-base-200 rounded-lg p-4 text-sm font-mono text-base-content/80 space-y-1">
+      <div>target_angle → <span class="text-info">Angle PID</span> → target_rate</div>
+      <div class="pl-4">→ <span class="text-success">Rate PID</span> → roll_cmd / pitch_cmd / yaw_cmd</div>
+      <div class="pl-8">→ <span class="text-primary">Mixer</span> → M1 M2 M3 M4</div>
+    </div>
+
+    <FlightController client:load />
+  </div>
+</Layout>
