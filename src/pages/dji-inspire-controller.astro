@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Markdown from '../components/Markdown.astro';
+
+const intro = `
+# DJI RC Plus (Inspire 3) — 프로급 운용 조종기 가이드
+
+이 조종기는 **일반 DJI RC**가 아닌 **DJI Inspire 3 전용 프로급 운용 콘솔**입니다.
+핵심 특징: **7인치 고휘도 화면**, **HDMI 출력**, **핫스왑 배터리**, **듀얼 오퍼레이터 지원**.
+
+> **주의:** 호환성이 Inspire 3로 사실상 고정되어 있습니다. 범용 DJI RC로 구매하면 안 됩니다.
+`;
+
+const why = `
+## 왜 이 조종기인가
+
+Inspire 3는 시네마/프로덕션 운용에 특화된 기체입니다. 그에 맞게 조종기도 단순 조작기가 아닌
+**현장 운용 콘솔** 역할을 합니다.
+
+- 해상도: **1920×1200**, 최대 **1200니트** 밝기
+- 야외 햇빛 아래서도 선명한 모니터링 가능
+- **HDMI 출력** — 외부 감독 모니터 연결 지원
+- 내장 배터리 **약 3.3시간**, 외장 WB37 추가 시 **약 6시간** 운용
+`;
+
+const structure = `
+## 조종기 구조 포인트
+
+"밝은 화면 달린 리모컨"이 아닌 **야외 모니터링 + 빠른 물리 조작 + 연속 운용** 구조입니다.
+
+| 항목 | 내용 |
+|------|------|
+| 버튼/다이얼 | 전면·후면·상단에 다수 배치, 커스텀 가능 |
+| 배터리 | 핫스왑 지원 |
+| 운용 시간 | 기본 3.3h / WB37 포함 6h |
+| 듀얼 오퍼레이터 | 파일럿 + 짐벌 오퍼레이터 분리 운용 지원 |
+`;
+
+const checklist = `
+## 구매 전 체크리스트
+
+### 1. 호환성 확인
+이 조종기는 **DJI Inspire 3 전용**입니다. 다른 DJI 기체의 RC 대체재로 쓸 수 없습니다.
+
+### 2. 운용 시간 계산
+- 기본: **약 3.3시간**
+- 외장 WB37 포함: **약 6시간**
+
+장시간 촬영이라면 WB37 운용을 전제로 계획하세요.
+
+### 3. 현장 출력 방식 확인
+**HDMI 출력**이 내장되어 있습니다. 외부 모니터/감독 모니터 흐름이 필요한지 미리 정하세요.
+
+### 4. 파일 전송 기대치 조정
+- Inspire 3 원본은 **PROSSD** 기반
+- **DJI RC Plus는 QuickTransfer/FlyShare를 지원하지 않습니다**
+- 캐시 파일은 컴퓨터 직접 연결 또는 microSD 이동으로 내보내야 합니다
+`;
+
+const fitFor = `
+## 이 제품이 맞는 사람 vs 아닌 사람
+
+**적합:**
+- Inspire 3를 메인 플랫폼으로 쓰는 촬영팀
+- 야외 햇빛 아래 모니터링이 필요한 운용자
+- HDMI 외부 모니터 연동 또는 장시간 촬영이 필요한 현장
+
+**부적합:**
+- 다른 DJI 기체와 범용 호환을 기대하는 경우
+- 가성비 조종기를 찾는 경우
+`;
+
+const next = `
+## 다음 단계
+
+1. **Inspire 3 본체 + RC Plus + 배터리 운용 구성표** 작성
+2. **RC Plus 기반 현장 촬영 세팅 체크리스트** 준비
+3. **DJI RC Plus vs 일반 DJI RC 계열 차이** 비교
+`;
+---
+
+<Layout title="DJI RC Plus (Inspire 3) — 운용 가이드">
+    <div class="py-10 max-w-3xl">
+        <Markdown content={intro} class="mb-8" />
+        <Markdown content={why} class="mb-8" />
+        <Markdown content={structure} class="mb-8" />
+        <Markdown content={checklist} class="mb-8" />
+        <Markdown content={fitFor} class="mb-8" />
+        <Markdown content={next} class="mb-8" />
+        <p class="text-sm opacity-60 mt-10">
+            참고: <a href="https://store.dji.com/product/dji-rc-plus-inspire-3" class="underline" target="_blank" rel="noopener">DJI Store — RC Plus (Inspire 3)</a>
+            &nbsp;·&nbsp;
+            <a href="https://www.dji.com/inspire-3/specs" class="underline" target="_blank" rel="noopener">DJI Inspire 3 Specs</a>
+        </p>
+    </div>
+</Layout>
