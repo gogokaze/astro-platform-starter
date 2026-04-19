@@ -1,0 +1,26 @@
+---
+import MissionPlanner from './_components/MissionPlanner.tsx';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/800.css';
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>YFL Mission Planner – Agri Work Mode</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    </head>
+    <body class="bg-[#080e18] overflow-hidden">
+        <MissionPlanner client:load />
+    </body>
+</html>
+
+<style is:global>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
