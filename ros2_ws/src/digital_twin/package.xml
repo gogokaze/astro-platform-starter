@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>digital_twin</name>
+  <version>0.1.0</version>
+  <description>Digital twin node: ROS2 → RViz markers + state broadcast</description>
+  <maintainer email="factory@example.com">factory</maintainer>
+  <license>MIT</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>builtin_interfaces</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

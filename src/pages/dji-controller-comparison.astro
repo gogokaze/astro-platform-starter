@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="DJI 조종기 비교: RC Plus vs RC 2 vs RC Pro 2">
+    <h1 class="mb-6">DJI 조종기 비교</h1>
+    <p class="text-lg mb-10 opacity-80">
+        RC Plus는 Inspire 3 전용 현장 운용 콘솔, RC 2는 경량 일반형, RC Pro 2는 고급 일반형입니다.
+    </p>
+
+    <!-- Section 1: 3종 비교표 -->
+    <section class="mb-16">
+        <h2 class="mb-6">RC Plus · RC 2 · RC Pro 2 비교</h2>
+        <div class="overflow-x-auto rounded-xl">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="bg-white/20">
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">항목</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">DJI RC Plus</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">DJI RC 2</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">DJI RC Pro 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">기본 포지션</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 시네마 운용</td>
+                        <td class="px-4 py-3 border border-white/20">일반 소비자형</td>
+                        <td class="px-4 py-3 border border-white/20">상위 소비자/프로슈머형</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">공식 호환 기체</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 전용</td>
+                        <td class="px-4 py-3 border border-white/20">Mini 4 Pro, Air 3, Air 3S, Neo</td>
+                        <td class="px-4 py-3 border border-white/20">Mavic 4 Pro, Mini 5 Pro, Mini 4 Pro, Air 3S, Air 3</td>
+                    </tr>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">화면</td>
+                        <td class="px-4 py-3 border border-white/20">7인치, 1920×1200</td>
+                        <td class="px-4 py-3 border border-white/20">5.5인치, 1920×1080</td>
+                        <td class="px-4 py-3 border border-white/20">7.02인치, 1920×1200</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">밝기</td>
+                        <td class="px-4 py-3 border border-white/20">1200니트</td>
+                        <td class="px-4 py-3 border border-white/20">700니트</td>
+                        <td class="px-4 py-3 border border-white/20">2000니트 피크 / 1600니트 지속</td>
+                    </tr>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">동작 시간</td>
+                        <td class="px-4 py-3 border border-white/20">내장 약 3시간 18분, WB37 포함 약 6시간</td>
+                        <td class="px-4 py-3 border border-white/20">최대 3시간</td>
+                        <td class="px-4 py-3 border border-white/20">약 4시간</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">HDMI 출력</td>
+                        <td class="px-4 py-3 border border-white/20">지원</td>
+                        <td class="px-4 py-3 border border-white/20">—</td>
+                        <td class="px-4 py-3 border border-white/20">지원</td>
+                    </tr>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">핫스왑</td>
+                        <td class="px-4 py-3 border border-white/20">지원</td>
+                        <td class="px-4 py-3 border border-white/20">—</td>
+                        <td class="px-4 py-3 border border-white/20">—</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">가장 잘 맞는 용도</td>
+                        <td class="px-4 py-3 border border-white/20">파일럿·짐벌 분리, 장시간 야외 촬영</td>
+                        <td class="px-4 py-3 border border-white/20">가볍고 단순한 일반 비행</td>
+                        <td class="px-4 py-3 border border-white/20">밝은 모니터링, 상위 소비자 촬영</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-6 p-4 bg-white/10 rounded-xl border border-white/20">
+            <p class="font-bold text-[#F67280]">한 줄 판정</p>
+            <p class="mt-2 text-sm">
+                <strong>Inspire 3를 쓰면 RC Plus가 사실상 정답</strong>이고, 일반 DJI 기체 쪽에서는
+                <strong>화면/모니터링 우선이면 RC Pro 2</strong>,
+                <strong>가벼움과 단순성이 우선이면 RC 2</strong>가 맞습니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 2: Inspire 3 운용 구성표 -->
+    <section class="mb-16">
+        <h2 class="mb-2">Inspire 3 본체 + RC Plus + 배터리 운용 구성표</h2>
+        <p class="text-sm opacity-70 mb-6">TB51 배터리 핫스왑 지원 · RC Plus WB37 포함 최대 약 6시간 운용 기준</p>
+        <div class="overflow-x-auto rounded-xl">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="bg-white/20">
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">운용 시나리오</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">기체 쪽 구성</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">조종기 쪽 구성</th>
+                        <th class="text-left px-4 py-3 font-bold border border-white/20">실전 해석</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">최소 운용</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 본체 + 기본 TB51 세트</td>
+                        <td class="px-4 py-3 border border-white/20">RC Plus 1대 + WB37 1개</td>
+                        <td class="px-4 py-3 border border-white/20">짧은 촬영·테스트·리허설용</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">1인 메인 촬영</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 본체 + TB51 6개 순환</td>
+                        <td class="px-4 py-3 border border-white/20">RC Plus 1대 + WB37 1~2개</td>
+                        <td class="px-4 py-3 border border-white/20">가장 균형 좋은 기본 현장 구성</td>
+                    </tr>
+                    <tr class="bg-white/5 hover:bg-white/10 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">2인 운용</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 본체 + TB51 6개 이상 권장</td>
+                        <td class="px-4 py-3 border border-white/20">RC Plus 2대 + 각 WB37 1개 이상</td>
+                        <td class="px-4 py-3 border border-white/20">파일럿/짐벌 오퍼레이터 분리용</td>
+                    </tr>
+                    <tr class="bg-white/10 hover:bg-white/15 transition">
+                        <td class="px-4 py-3 border border-white/20 font-medium">장시간 데이 촬영</td>
+                        <td class="px-4 py-3 border border-white/20">Inspire 3 본체 + TB51 6개 순환 + 추가 충전 로테이션</td>
+                        <td class="px-4 py-3 border border-white/20">RC Plus 1~2대 + WB37 여분 확보</td>
+                        <td class="px-4 py-3 border border-white/20">지상 대기시간과 교대 운용까지 커버</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="mt-4 text-sm opacity-70">
+            "기본형" 조합: <strong>Inspire 3 + TB51 6개 로테이션 + RC Plus + WB37 1개</strong>.
+            듀얼 제어 2인 촬영이면 RC Plus 2대 체계.
+        </p>
+    </section>
+
+    <!-- Section 3: 현장 촬영 체크리스트 -->
+    <section class="mb-16">
+        <h2 class="mb-2">RC Plus 기준 현장 촬영 세팅 체크리스트</h2>
+        <p class="text-sm opacity-70 mb-6">HDMI 출력 · 듀얼 제어 · DJI Pilot 2 · 4K/30 라이브 전송 · 핫스왑 운용 기준</p>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <h3 class="text-lg font-bold mb-4 text-[#F67280]">출발 전</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>WB37를 꽂은 상태로 시작하기</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>RC Plus 내부 배터리와 WB37 둘 다 잔량 확인</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>DJI Pilot 2에서 기체/조종기/배터리 펌웨어 상태 확인</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>단독 조종인지, 듀얼 제어인지 미리 확정하기</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <h3 class="text-lg font-bold mb-4 text-[#F67280]">촬영 직전</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>감독/클라이언트 모니터가 있으면 HDMI 출력부터 연결 확인</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>강한 햇빛 환경이면 모니터 후드 준비</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>4K/30 라이브 전송을 쓸지, 기본 1080p/60 위주로 갈지 먼저 결정</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>통신 품질이 애매하면 4K 라이브보다 안정성 우선으로 세팅</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <h3 class="text-lg font-bold mb-4 text-[#F67280]">촬영 중</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>배터리 교체는 기체 TB51과 RC Plus 운용 시간을 따로 관리하기</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>장거리/복잡한 현장은 FPV 안정성 우선으로 해상도 욕심 줄이기</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>2인 운용이면 파일럿은 기체 안전, 짐벌 오퍼레이터는 프레이밍에 역할 분리</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>DJI Transmission을 같이 쓰면 간섭을 피하려고 장비 간 거리를 띄우기</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <h3 class="text-lg font-bold mb-4 text-[#F67280]">종료 전</h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>캐시/모니터링 기록이 필요한지 확인</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>다음 비행까지 남은 RC Plus/WB37 시간을 먼저 체크</span></li>
+                    <li class="flex gap-2"><span class="opacity-50 shrink-0">○</span><span>장시간 촬영이면 WB37 교대 타이밍을 비행 배터리보다 먼저 잡기</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <div class="p-4 bg-white/5 rounded-xl border border-white/20 text-sm">
+                <p class="font-bold mb-1">4K/30 라이브 전송 조건</p>
+                <p class="opacity-80">30fps 이하 녹화일 때만 활성화. 통신 품질이 낮으면 1080p로 내리는 것이 권장됩니다.</p>
+            </div>
+            <div class="p-4 bg-white/5 rounded-xl border border-white/20 text-sm">
+                <p class="font-bold mb-1">듀얼 제어 간섭 방지</p>
+                <p class="opacity-80">DJI Transmission과 병행 시 1m 이상 거리 확보 및 DFS 채널 전환 권장.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: RC Plus vs 일반 RC 계열 차이 -->
+    <section class="mb-16">
+        <h2 class="mb-6">DJI RC Plus vs 일반 DJI RC 계열 차이</h2>
+
+        <div class="grid gap-6 sm:grid-cols-3 mb-8">
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <p class="text-xs uppercase tracking-widest opacity-50 mb-2">원인</p>
+                <p class="text-sm">
+                    Inspire 3는 시네마 촬영 플랫폼에 가깝습니다. RC Plus는 "비행 조종기"보다
+                    <strong>현장 운용 패널</strong> 성격이 강하며, 7인치 1200니트·HDMI·핫스왑·커스텀 버튼·듀얼 제어가
+                    그 설계 의도를 반영합니다.
+                </p>
+            </div>
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <p class="text-xs uppercase tracking-widest opacity-50 mb-2">구조</p>
+                <p class="text-sm">
+                    일반 RC 계열은 <strong>기체 호환 폭·무게·휴대성·소비자 워크플로</strong>가 우선입니다.
+                    RC 2는 경량 단순 구조, RC Pro 2는 Mini-LED와 HDMI를 추가하면서도 소비자 드론 축에 서 있습니다.
+                </p>
+            </div>
+            <div class="bg-white/10 rounded-xl p-6 border border-white/20">
+                <p class="text-xs uppercase tracking-widest opacity-50 mb-2">결론</p>
+                <p class="text-sm">
+                    RC Plus를 "비싼 일반 조종기"로, 일반 RC를 "Inspire 3 대체품"으로 보면 안 됩니다.
+                    둘은 <strong>운용 철학 자체가 다릅니다.</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white/10 rounded-xl border border-white/20">
+            <p class="font-bold mb-3 text-[#F67280]">선택 기준 요약</p>
+            <div class="grid gap-3 sm:grid-cols-3 text-sm">
+                <div class="flex items-start gap-3">
+                    <span class="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#F67280] flex items-center justify-center text-xs font-bold">1</span>
+                    <span><strong>Inspire 3</strong> → RC Plus (사실상 정답)</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-[#C06C84] flex items-center justify-center text-xs font-bold">2</span>
+                    <span><strong>화면·모니터링 우선</strong> → RC Pro 2</span>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="shrink-0 mt-0.5 w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-xs font-bold">3</span>
+                    <span><strong>가볍고 단순한 비행</strong> → RC 2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
