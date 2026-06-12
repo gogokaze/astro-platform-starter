@@ -1,0 +1,257 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="CNC Live Dashboard — Digital Twin">
+    <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+            <h1 class="mb-1">CNC Live Dashboard</h1>
+            <p class="text-sm opacity-60">ESP32 → MQTT → ROS2 → Digital Twin</p>
+        </div>
+        <div class="flex items-center gap-2 text-sm px-4 py-2 rounded-full bg-white/10 border border-white/20">
+            <span id="conn-dot" class="inline-block w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+            <span id="conn-label">연결 중...</span>
+        </div>
+    </div>
+
+    <!-- Data flow diagram -->
+    <div class="mb-10 flex flex-wrap items-center gap-2 text-xs opacity-60 font-mono">
+        <span class="px-2 py-1 bg-white/10 rounded">ESP32</span>
+        <span>→ MQTT →</span>
+        <span class="px-2 py-1 bg-white/10 rounded">ROS2 Bridge</span>
+        <span>→</span>
+        <span class="px-2 py-1 bg-white/10 rounded">/cnc/state</span>
+        <span>→</span>
+        <span class="px-2 py-1 bg-white/10 rounded">FastAPI WS</span>
+        <span>→</span>
+        <span class="px-2 py-1 bg-[#F67280]/30 rounded border border-[#F67280]/40">Dashboard</span>
+    </div>
+
+    <!-- Machine cards (dynamically populated) -->
+    <div id="machines-container" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+        <!-- Skeleton card shown before data arrives -->
+        <div class="skeleton-card bg-white/5 rounded-xl p-6 border border-white/10 animate-pulse">
+            <div class="h-4 bg-white/20 rounded mb-4 w-2/3"></div>
+            <div class="h-24 bg-white/10 rounded mb-4"></div>
+            <div class="h-3 bg-white/15 rounded w-1/2"></div>
+        </div>
+    </div>
+
+    <!-- Digital Twin 3D visualizer -->
+    <section class="mb-10">
+        <h2 class="mb-4">Digital Twin — 진동 시각화</h2>
+        <div id="twin-stage"
+             class="relative bg-black/30 rounded-xl border border-white/20 overflow-hidden"
+             style="height: 320px;">
+            <!-- Floor grid lines -->
+            <div class="absolute inset-0 opacity-20"
+                 style="background-image: linear-gradient(#fff 1px, transparent 1px),
+                                          linear-gradient(90deg, #fff 1px, transparent 1px);
+                        background-size: 40px 40px;">
+            </div>
+            <!-- Machine twins injected by JS -->
+            <div id="twin-machines" class="absolute bottom-0 left-0 right-0 flex items-end justify-around px-12 pb-8"></div>
+            <p id="twin-empty" class="absolute inset-0 flex items-center justify-center text-sm opacity-40">
+                데이터 수신 대기 중...
+            </p>
+        </div>
+    </section>
+
+    <!-- ROS2 topic stream log -->
+    <section class="mb-10">
+        <h2 class="mb-4">ROS2 Topic Stream — <code>/cnc/twin/state</code></h2>
+        <div id="log" class="bg-black/40 rounded-xl border border-white/10 font-mono text-xs p-4 h-48 overflow-y-auto space-y-1"></div>
+    </section>
+
+    <!-- Connection config -->
+    <section class="mb-16">
+        <h2 class="mb-4">연결 설정</h2>
+        <div class="bg-white/5 rounded-xl border border-white/10 p-6 flex flex-wrap gap-4 items-end">
+            <div class="flex flex-col gap-1">
+                <label class="text-xs opacity-60">FastAPI WebSocket URL</label>
+                <input id="ws-url" type="text" value="ws://localhost:8000/ws"
+                       class="bg-white/10 border border-white/20 rounded px-3 py-2 text-sm w-72 focus:outline-none focus:border-[#F67280]" />
+            </div>
+            <button id="btn-connect" onclick="initWS()"
+                    class="btn btn-sm btn-primary">연결</button>
+            <button onclick="startDemo()"
+                    class="btn btn-sm bg-white/10 hover:bg-white/20 border-white/20">데모 모드</button>
+        </div>
+    </section>
+</Layout>
+
+<script is:inline>
+// ──────────────────────────────────────────────────────
+// State
+// ──────────────────────────────────────────────────────
+let ws = null;
+let demoTimer = null;
+
+function updateUI(data) {
+    if (!data || !data.machines) return;
+
+    const machines = data.machines;
+    const container = document.getElementById('machines-container');
+    const twins = document.getElementById('twin-machines');
+    const emptyMsg = document.getElementById('twin-empty');
+
+    // Remove skeleton
+    container.querySelectorAll('.skeleton-card').forEach(el => el.remove());
+    emptyMsg.style.display = 'none';
+
+    for (const [id, info] of Object.entries(machines)) {
+        updateMachineCard(container, id, info);
+        updateTwinBlock(twins, id, info);
+    }
+
+    // Log entry
+    const log = document.getElementById('log');
+    const ts = new Date(data.timestamp * 1000).toISOString().substring(11, 23);
+    const entries = Object.entries(machines).map(([id, m]) =>
+        `[${ts}] ${id}  vib=${m.vibration?.toFixed(3) ?? '?'}  rpm=${m.rpm ?? '?'}  ${m.status ?? ''}`
+    ).join('\n');
+    const line = document.createElement('div');
+    line.textContent = entries;
+    line.className = 'opacity-70';
+    log.prepend(line);
+    // Keep last 200 lines
+    while (log.children.length > 200) log.lastChild.remove();
+}
+
+function updateMachineCard(container, id, info) {
+    let card = document.getElementById('card-' + id);
+    if (!card) {
+        card = document.createElement('div');
+        card.id = 'card-' + id;
+        card.className = 'bg-white/10 rounded-xl p-6 border border-white/20 transition-all';
+        container.appendChild(card);
+    }
+
+    const vib = info.vibration ?? 0;
+    const rpm = info.rpm ?? 0;
+    const status = info.status ?? 'OK';
+    const statusColor = status === 'WARNING' ? 'text-yellow-400' : 'text-green-400';
+    const barWidth = Math.min(100, Math.round(vib * 100));
+    const barColor = vib > 0.8 ? '#ef4444' : vib > 0.5 ? '#f59e0b' : '#22c55e';
+
+    card.innerHTML = `
+        <div class="flex items-start justify-between mb-4">
+            <div>
+                <p class="text-xs opacity-50 mb-1">Machine ID</p>
+                <p class="font-bold text-sm">${id}</p>
+            </div>
+            <span class="text-xs font-bold ${statusColor} px-2 py-1 rounded-full bg-white/10">${status}</span>
+        </div>
+
+        <div class="mb-4">
+            <div class="flex justify-between text-xs opacity-60 mb-1">
+                <span>진동</span><span>${(vib * 100).toFixed(1)}%</span>
+            </div>
+            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div style="width:${barWidth}%; background:${barColor}; transition: width 0.3s"
+                     class="h-full rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-center">
+            <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-xl font-bold">${rpm.toLocaleString()}</p>
+                <p class="text-xs opacity-50">RPM</p>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-xl font-bold">${(vib * 100).toFixed(1)}</p>
+                <p class="text-xs opacity-50">진동 %</p>
+            </div>
+        </div>
+    `;
+}
+
+function updateTwinBlock(twins, id, info) {
+    let block = document.getElementById('twin-' + id);
+    if (!block) {
+        block = document.createElement('div');
+        block.id = 'twin-' + id;
+        block.className = 'flex flex-col items-center gap-2';
+        twins.appendChild(block);
+    }
+
+    const vib = info.vibration ?? 0;
+    const maxH = 200;
+    const h = Math.max(20, Math.round(vib * maxH));
+    const r = Math.round(Math.min(255, vib * 510));
+    const g = Math.round(Math.max(0, 255 - vib * 510));
+    const color = `rgb(${r},${g},50)`;
+
+    block.innerHTML = `
+        <div style="width:60px; height:${h}px; background:${color};
+                    transition: height 0.4s, background 0.4s;
+                    border-radius:4px 4px 0 0; box-shadow: 0 0 20px ${color}44;">
+        </div>
+        <p class="text-xs opacity-60 font-mono">${id.replace('_', '\n')}</p>
+    `;
+}
+
+// ──────────────────────────────────────────────────────
+// WebSocket
+// ──────────────────────────────────────────────────────
+function setStatus(connected) {
+    const dot = document.getElementById('conn-dot');
+    const label = document.getElementById('conn-label');
+    if (connected) {
+        dot.className = 'inline-block w-2 h-2 rounded-full bg-green-400';
+        label.textContent = '연결됨';
+    } else {
+        dot.className = 'inline-block w-2 h-2 rounded-full bg-yellow-400 animate-pulse';
+        label.textContent = '연결 끊김';
+    }
+}
+
+function initWS() {
+    stopDemo();
+    if (ws) { ws.close(); ws = null; }
+
+    const url = document.getElementById('ws-url').value.trim();
+    try {
+        ws = new WebSocket(url);
+    } catch {
+        setStatus(false);
+        return;
+    }
+
+    ws.onopen = () => setStatus(true);
+    ws.onmessage = (e) => {
+        try { updateUI(JSON.parse(e.data)); } catch {}
+    };
+    ws.onclose = ws.onerror = () => setStatus(false);
+}
+
+// ──────────────────────────────────────────────────────
+// Demo mode (no real hardware)
+// ──────────────────────────────────────────────────────
+function stopDemo() {
+    if (demoTimer) { clearInterval(demoTimer); demoTimer = null; }
+}
+
+function startDemo() {
+    stopDemo();
+    if (ws) { ws.close(); ws = null; }
+    setStatus(true);
+
+    const state = {
+        swiss_lathe_01: { vibration: 0.2, rpm: 3200, status: 'OK' },
+        swiss_lathe_02: { vibration: 0.5, rpm: 2800, status: 'OK' },
+    };
+
+    demoTimer = setInterval(() => {
+        for (const k of Object.keys(state)) {
+            state[k].vibration = Math.max(0, Math.min(1, state[k].vibration + (Math.random() - 0.48) * 0.08));
+            state[k].rpm = Math.round(state[k].rpm + (Math.random() - 0.5) * 100);
+            state[k].status = state[k].vibration > 0.8 ? 'WARNING' : 'OK';
+        }
+        updateUI({ timestamp: Date.now() / 1000, machines: state });
+    }, 200);
+}
+
+// Auto-start demo on load
+startDemo();
+</script>

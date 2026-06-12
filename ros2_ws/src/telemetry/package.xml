@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>telemetry</name>
+  <version>0.1.0</version>
+  <description>MQTT to ROS2 bridge for CNC sensor telemetry</description>
+  <maintainer email="factory@example.com">factory</maintainer>
+  <license>MIT</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
